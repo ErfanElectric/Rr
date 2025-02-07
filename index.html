@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 IoT Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .on { background-color: green; }
+        .off { background-color: red; }
+    </style>
+</head>
+<body>
+    <h1>ESP32 IoT Control</h1>
+    <button class="button on" onclick="sendCommand('on')">Turn ON</button>
+    <button class="button off" onclick="sendCommand('off')">Turn OFF</button>
+
+    <script>
+        function sendCommand(command) {
+            fetch(`http://192.168.43.79/control?state=${command}`, { mode: "cors" })
+
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
